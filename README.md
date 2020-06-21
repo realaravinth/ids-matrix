@@ -1,3 +1,6 @@
+[![Build Status](https://img.shields.io/travis/realaravinth/ids-matrix.svg?style=flat-square)](https://travis-ci.org/realaravinth/ids-matrix)
+[![License](https://img.shields.io/badge/License-Apache%202.0-yellowgreen.svg?style=flat-square)](https://opensource.org/licenses/Apache-2.0)
+
 # ids-matrix
 A lightweight Intrusion Detection System built on top of matrix
 <br><br>
