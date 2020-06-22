@@ -7,7 +7,7 @@ A lightweight Intrusion Detection System built on top of matrix
 **WARNING: `realaravinth/ids-matrix` comes with ABSOLUTELY NO WARRANY, to the extent permitted by applicable law.**
 <br><br>
 The instructions provided here are for the Debian(Buster) GNU/Linux, however it can be modified to work with other distrubtions as well.
-It uses `pam_exec` to collect login information so kindly reger to your distribution's guide if this guide doesn't work.
+It uses `pam_exec` to collect login information so kindly refer to your distribution's guide if this guide doesn't work.
 
 ## Table of contents:
 

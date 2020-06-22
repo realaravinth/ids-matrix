@@ -1,11 +1,10 @@
 use std::collections::HashMap;
-use std::process::Command;
 use std::env;
+use std::process::Command;
 
 #[tokio::main]
-async fn main() ->  Result<(), Box<dyn std::error::Error>> {
-
-//  Enter details:
+async fn main() -> Result<(), Box<dyn std::error::Error>> {
+    //  Enter details:
 
     let server = "";
     let access_token = "";
@@ -13,7 +12,8 @@ async fn main() ->  Result<(), Box<dyn std::error::Error>> {
 
     let url = format!(
         "{}/_matrix/client/r0/rooms/{}/send/m.room.message?access_token={}",
-    server, room_id, access_token) ;
+        server, room_id, access_token
+    );
 
     let date = Command::new("/bin/date")
         .output()
@@ -23,7 +23,7 @@ async fn main() ->  Result<(), Box<dyn std::error::Error>> {
         .arg("-a")
         .output()
         .expect("Error at /bin/uname");
- 
+
     let hostname_fqdn = Command::new("/bin/hostname")
         .arg("--fqdn")
         .output()
@@ -34,8 +34,10 @@ async fn main() ->  Result<(), Box<dyn std::error::Error>> {
         "{} login on {} for account {}\nUser: {}\nRemote Host: {}\nTTY: {}\nDate: {}Server: {}",
         &args[1],
         String::from_utf8_lossy(&hostname_fqdn.stdout),
-        &args[2], &args[2], &args[3], 
-        &args[4], 
+        &args[2],
+        &args[2],
+        &args[3],
+        &args[4],
         String::from_utf8_lossy(&date.stdout),
         String::from_utf8_lossy(&sys_info.stdout),
     );
@@ -43,11 +45,8 @@ async fn main() ->  Result<(), Box<dyn std::error::Error>> {
     let mut map = HashMap::new();
     map.insert("msgtype", "m.text");
     map.insert("body", &message);
-    
+
     let client = reqwest::Client::new();
-    client.post(&url)
-        .json(&map)
-        .send()
-        .await?;
+    client.post(&url).json(&map).send().await?;
     Ok(())
 }
