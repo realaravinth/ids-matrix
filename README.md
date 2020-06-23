@@ -1,5 +1,5 @@
 [![Build Status](https://img.shields.io/travis/realaravinth/ids-matrix.svg?style=flat-square)](https://travis-ci.org/realaravinth/ids-matrix)
-[![License](https://img.shields.io/badge/License-Apache%202.0-yellowgreen.svg?style=flat-square)](https://opensource.org/licenses/Apache-2.0)
+[![License: GPL v2](https://img.shields.io/badge/License-GPL%20v2-blue.svg)](https://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html)
 
 # ids-matrix
 A lightweight Intrusion Detection System built on top of matrix
@@ -36,11 +36,9 @@ It uses `pam_exec` to collect login information so kindly refer to your distribu
 
 ## Installation
   
-  1. Place `ids-matrix` and `notify.sh` binary in `/usr/local/bin` of your server and give executable priveleges
+  1. Place `ids-matrix` binary in `/usr/local/bin` of your server
   2. Append the following to `/etc/pam.d/sshd`(always take backup of the original config):
-    `session optional pam_exec.so /usr/local/bin/notify.sh`
+    `session optional pam_exec.so /usr/local/bin/ids-matrix`
     
 ## Contributions
-Yes please! Fork this repo and send in PRs, I'll be happy to review and merge them!
- 
-    
+Yes please! Fork this repo and send in PRs, I'll be happy to review and merge them!  
