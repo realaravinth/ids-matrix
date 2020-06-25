@@ -37,7 +37,7 @@ It uses `pam_exec` to collect login information so kindly refer to your distribu
 ## Installation
   
   1. Place `ids-matrix` binary in `/usr/local/bin` of your server
-  2. Append the following to `/etc/pam.d/sshd`(always take backup of the original config):
+  2. Append the following to `/etc/pam.d/sshd`(always take backup of the original config):<br>
     `session optional pam_exec.so /usr/local/bin/ids-matrix`
     
 ## Contributions
