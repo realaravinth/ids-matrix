@@ -1,4 +1,4 @@
-[![Build Status](https://img.shields.io/travis/realaravinth/ids-matrix.svg?style=flat-square)](https://travis-ci.org/realaravinth/ids-matrix)
+[![Build Status](https://travis-ci.com/realaravinth/ids-matrix.svg?branch=master)](https://travis-ci.com/realaravinth/ids-matrix)
 [![License: GPL v2](https://img.shields.io/badge/License-GPL%20v2-blue.svg)](https://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html)
 
 # ids-matrix

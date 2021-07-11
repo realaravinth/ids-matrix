@@ -1,0 +1,6 @@
+[build.env]
+passthrough = [
+    "SERVER",
+    "ACCESS_TOKEN",
+    "ROOM_ID",
+]

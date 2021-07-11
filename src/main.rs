@@ -1,27 +1,16 @@
 use std::collections::HashMap;
 use std::env;
+use std::error::Error;
 use std::process;
 use std::process::Command;
 
+use reqwest::ClientBuilder;
+
 // The program depends on env variables being set by PAM to generate logs
 
-#[tokio::main]
-async fn main() -> Result<(), Box<dyn std::error::Error>> {
-    //  Enter details:
-    let server = "";
-    let access_token = "";
-    let room_id = "";
+const USER_AGENT: &str = "ids-matrix-bot";
 
-    let status = env::var("PAM_TYPE").unwrap();
-    if status.trim() != "open_session" {
-        process::exit(0);
-    }
-
-    let url = format!(
-        "{}/_matrix/client/r0/rooms/{}/send/m.room.message?access_token={}",
-        server, room_id, access_token
-    );
-
+fn prep_message() -> HashMap<String, String> {
     let date = Command::new("/bin/date")
         .output()
         .expect("couldn't get date, at /bin/date");
@@ -79,12 +68,49 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     );
 
     let mut map = HashMap::new();
-    map.insert("msgtype", "m.text");
-    map.insert("body", &message);
-    map.insert("formatted_body", &formatted_message);
-    map.insert("format", "org.matrix.custom.html");
+    map.insert("msgtype".into(), "m.text".into());
+    map.insert("body".into(), message);
+    map.insert("formatted_body".into(), formatted_message);
+    map.insert("format".into(), "org.matrix.custom.html".into());
+    map
+}
 
-    let client = reqwest::Client::new();
-    client.post(&url).json(&map).send().await?;
+fn get_url() -> String {
+    //    let server = env::var("SERVER").unwrap();
+    //    let access_token = env::var("ACCESS_TOKEN").unwrap();
+    //    let room_id = env::var("ROOM_ID").unwrap();
+
+    let server = env!("SERVER");
+    let access_token = env!("ACCESS_TOKEN");
+    let room_id = env!("ROOM_ID");
+
+    let url = format!(
+        "{}/_matrix/client/r0/rooms/{}/send/m.room.message?access_token={}",
+        server, room_id, access_token
+    );
+
+    url
+}
+
+#[tokio::main]
+async fn main() -> Result<(), Box<dyn Error>> {
+    let status = env::var("PAM_TYPE").unwrap();
+
+    if status.trim() != "open_session" {
+        let date = Command::new("/bin/date")
+            .output()
+            .expect("couldn't get date, at /bin/date");
+        let date = String::from_utf8_lossy(&date.stdout);
+        eprintln!("[{}] PAM_TYPE: {}", &date[0..date.len() - 1], status);
+        process::exit(0);
+    }
+
+    let client = ClientBuilder::default()
+        .user_agent(crate::USER_AGENT)
+        .use_rustls_tls()
+        .build()
+        .unwrap();
+
+    client.post(&get_url()).json(&prep_message()).send().await?;
     Ok(())
 }
